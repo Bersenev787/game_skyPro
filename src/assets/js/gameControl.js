@@ -43,7 +43,8 @@ const generateCardPairs = (level) => {
   }
 
   console.log(cardPairs);
-  return cardPairs;
+
+  return cardPairs.sort(() => Math.random() - 0.5);
 };
 
 // Добавляем обработчик клика на кнопки выбора уровня сложности
@@ -87,7 +88,6 @@ export const startGame = () => {
     }
 
     const cardsList = generateCardPairs(selectedLevel).map((card) => {
-      console.log("cardsList", card);
       return `
           <img
             class="start_second_img"
@@ -146,6 +146,7 @@ export const startGame = () => {
 
               // длинна массива сгенерированных карт
               if (matchedPairs === cardPairs.length / 2) {
+                console.log("winner");
                 startTimer(true);
                 showWinner({ winner: true });
               }
@@ -241,6 +242,7 @@ export const startGame = () => {
         card.setAttribute("data-flipped", "false");
       });
       flippedCards = [];
+      matchedPairs = 0;
     }
 
     // Начать заново

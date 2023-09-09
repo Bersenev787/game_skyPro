@@ -1,4 +1,4 @@
-import { enterPage } from "./assets/js/gameMenu.js";
+import { enterPage } from "./assets/js/gameControl.js";
 import "./assets/scss/main.scss";
 
 function component() {
