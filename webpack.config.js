@@ -34,4 +34,5 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({ template: "./src/index.html" }),
   ],
+  devtool: isProd ? false : "source-map",
 };

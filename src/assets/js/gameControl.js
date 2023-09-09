@@ -42,8 +42,6 @@ const generateCardPairs = (level) => {
     }
   }
 
-  console.log(cardPairs);
-
   return cardPairs.sort(() => Math.random() - 0.5);
 };
 
