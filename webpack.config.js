@@ -1,6 +1,8 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 const isProd = process.env.MODE_ENV === "production";
 
@@ -14,16 +16,19 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.css/, use: ["style-loader", "css-loader"] },
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+      },
       { test: /\.(png|svg|jpg|jpeg|gif)$/i, type: "asset/resource" },
       { test: /\.(woff|woff2|eot|ttf|otf)$/i, type: "asset/resource" },
-      {
-        test: /\.s[ac]ss$/i,
-        use: ["style-loader", "css-loader", "sass-loader"],
-      },
     ],
   },
+  optimization: {
+    minimizer: ["...", new CssMinimizerPlugin()],
+  },
   plugins: [
+    new MiniCssExtractPlugin(),
     new CopyPlugin({
       patterns: [
         {
