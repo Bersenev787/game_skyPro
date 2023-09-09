@@ -5,7 +5,7 @@ const container = document.querySelector(".container");
 const content = document.createElement("div");
 content.classList.add("content");
 
-export const enterPage = () => {
+export const enterPage = (): void => {
   content.innerHTML = `
     <h1 class="content_header">Выбери сложность</h1>
     <div class="content_btn">
@@ -22,19 +22,19 @@ export const enterPage = () => {
 };
 
 // Добавляем обработчик клика на кнопку "Старт"
-export const startGame = () => {
-  const startButton = document.querySelector(".content_start");
+export const startGame = (): void => {
+  const startButton: Element | null = document.querySelector(".content_start");
 
   startButton.addEventListener("click", () => {
     // Получаем уровень сложности из localStorage
-    const selectedLevel = localStorage.getItem("selectedLevel");
+    const selectedLevel: string | null = localStorage.getItem("selectedLevel");
 
     if (!selectedLevel) {
       alert("Пожалуйста, выберите уровень сложности перед началом игры.");
       return;
     }
 
-    const cardsList = generateCardPairs(selectedLevel).map((card) => {
+    const cardsList: string[] = generateCardPairs(selectedLevel).map((card) => {
       return `
           <img
             class="start_second_img"
@@ -45,7 +45,7 @@ export const startGame = () => {
           />
         `;
     });
-    const startGameField = document.createElement("div");
+    const startGameField: HTMLDivElement = document.createElement("div");
     startGameField.classList.add("start");
     startGameField.innerHTML = `
       <div class="start_first">
@@ -60,32 +60,35 @@ export const startGame = () => {
     container.removeChild(content);
     container.appendChild(startGameField);
 
-    const cards = document.querySelectorAll(".start_second_img");
-    let flippedCards = []; // Массив для хранения перевернутых карточек
-    let matchedPairs = 0; // Количество пар, которые были найдены
+    const cards: NodeListOf<Element> =
+      document.querySelectorAll(".start_second_img");
+    let flippedCards: Element[] = []; // Массив для хранения перевернутых карточек
+    let matchedPairs: number = 0; // Количество пар, которые были найдены
 
     cards.forEach((card, index) => {
-      card.setAttribute("data-flipped", true);
+      card.setAttribute("data-flipped", "true");
       setTimeout(() => {
-        card.setAttribute("data-flipped", false);
-        card.src = "../img/shirt.png";
+        card.setAttribute("data-flipped", "false");
+        card.setAttribute("src", "../img/shirt.png");
       }, 5000);
     });
 
-    // Добавляем обработчик клика на каждую карточку
-    cards.forEach((card) => {
-      card.addEventListener("click", handleCardClick);
-    });
     // Функция для обработки клика на карточку
-    function handleCardClick(event) {
-      const card = event.target;
+    function handleCardClick(event: Event): void {
+      const card: Element = event.target as Element;
 
-      if (card.dataset.flipped === "false" && flippedCards.length < 2) {
+      if (
+        card.getAttribute("data-flipped") === "false" &&
+        flippedCards.length < 2
+      ) {
         flipCard(card);
         flippedCards.push(card);
 
         if (flippedCards.length === 2) {
-          if (flippedCards[0].dataset.image === flippedCards[1].dataset.image) {
+          if (
+            flippedCards[0].getAttribute("data-image") ===
+            flippedCards[1].getAttribute("data-image")
+          ) {
             setTimeout(() => {
               // Карты совпали
               matchedPairs++;
@@ -93,7 +96,6 @@ export const startGame = () => {
 
               // длинна массива сгенерированных карт
               if (matchedPairs === cardsList.length / 2) {
-                console.log("winner");
                 startTimer(true);
                 showWinner({ winner: true });
               }
@@ -107,18 +109,24 @@ export const startGame = () => {
       }
     }
 
+    // Добавляем обработчик клика на каждую карточку
+    cards.forEach((card) => {
+      card.addEventListener("click", handleCardClick);
+    });
+
     // Функция для переворота карточки
-    function flipCard(card) {
-      card.setAttribute("src", card.dataset.image);
+    function flipCard(card: Element): void {
+      card.setAttribute("src", card.getAttribute("data-image") || "");
       card.setAttribute("data-flipped", "true");
     }
 
-    function showWinner({ winner }) {
-      const time = document.querySelector(".start_first_timer").textContent;
-      const alertPopup = document.createElement("div");
+    function showWinner({ winner }: { winner: boolean }) {
+      const time: string | null =
+        document.querySelector(".start_first_timer").textContent;
+      const alertPopup: HTMLDivElement = document.createElement("div");
       alertPopup.classList.add("alert");
 
-      const alertPopupWrapper = document.createElement("div");
+      const alertPopupWrapper: HTMLDivElement = document.createElement("div");
 
       alertPopupWrapper.classList.add("alert-wrapper");
       alertPopupWrapper.innerHTML = `
@@ -136,7 +144,9 @@ export const startGame = () => {
       container.appendChild(alertPopup);
       container.appendChild(alertPopupWrapper);
 
-      const restartGame = document.querySelector(".alert-wrapper-button");
+      const restartGame: Element | null = document.querySelector(
+        ".alert-wrapper-button",
+      );
 
       restartGame.addEventListener("click", () => {
         container.removeChild(alertPopup);
@@ -146,26 +156,29 @@ export const startGame = () => {
       });
     }
 
-    const timerElement = document.querySelector(".start_first_timer");
+    const timerElement: Element | null =
+      document.querySelector(".start_first_timer");
     let timerInterval; // Переменная для хранения интервала таймера
-    let seconds = 0;
-    let minutes = 0;
+    let seconds: number = 0;
+    let minutes: number = 0;
 
     // Функция для обновления таймера
-    function updateTimer() {
+    function updateTimer(): void {
       seconds++;
       if (seconds === 60) {
         seconds = 0;
         minutes++;
       }
 
-      const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-      const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+      const formattedMinutes: number | string =
+        minutes < 10 ? `0${minutes}` : minutes;
+      const formattedSeconds: number | string =
+        seconds < 10 ? `0${seconds}` : seconds;
 
       timerElement.textContent = `${formattedMinutes}:${formattedSeconds}`;
     }
 
-    function startTimer(restart = false) {
+    function startTimer(restart: boolean = false): void | undefined {
       if (restart) {
         clearInterval(timerInterval);
         timerInterval = null;
@@ -183,7 +196,7 @@ export const startGame = () => {
     setTimeout(startTimer, 5000);
 
     // Функция для скрытия карточек
-    function unflipCards() {
+    function unflipCards(): void {
       cards.forEach((card) => {
         card.setAttribute("src", "../img/shirt.png");
         card.setAttribute("data-flipped", "false");
@@ -193,7 +206,8 @@ export const startGame = () => {
     }
 
     // Начать заново
-    const startNewGame = document.querySelector(".start_first_btn");
+    const startNewGame: Element | null =
+      document.querySelector(".start_first_btn");
     startNewGame?.addEventListener("click", () => {
       localStorage.removeItem("selectedLevel");
       clearInterval(timerInterval);

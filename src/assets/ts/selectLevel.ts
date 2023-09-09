@@ -1,13 +1,14 @@
 // Добавляем обработчик клика на кнопки выбора уровня сложности
-export const getLevel = () => {
-  const levelButtons = document.querySelectorAll(".content_btn_item");
+export const getLevel = (): void => {
+  const levelButtons: NodeListOf<Element> =
+    document.querySelectorAll(".content_btn_item");
   let selectedButton = null;
 
   removeSelect(levelButtons);
 
   levelButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      const selectedLevel = button.getAttribute("data-level");
+      const selectedLevel: string | null = button.getAttribute("data-level");
 
       // Удаляем класс "selected" у всех кнопок
       removeSelect(levelButtons);
@@ -23,7 +24,7 @@ export const getLevel = () => {
   });
 };
 
-const removeSelect = (buttons) => {
+const removeSelect = (buttons: NodeListOf<Element>): void => {
   buttons.forEach((btn) => {
     btn.classList.remove("selected");
   });
