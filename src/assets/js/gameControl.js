@@ -1,3 +1,6 @@
+import { getLevel } from "./selectLevel";
+import { generateCardPairs } from "./generateCards";
+
 const container = document.querySelector(".container");
 const content = document.createElement("div");
 content.classList.add("content");
@@ -17,60 +20,6 @@ export const enterPage = () => {
   getLevel();
   startGame();
 };
-
-const removeSelect = (buttons) => {
-  buttons.forEach((btn) => {
-    btn.classList.remove("selected");
-  });
-};
-
-const generateCardPairs = (level) => {
-  const numPairs = parseInt(level) * 6; // Количество пар карт в зависимости от уровня
-  // Генерация пар карт
-  const suits = ["spades", "diamonds", "hearts", "cross"];
-  const ranks = ["ace", "king", "queen", "jack", "10", "9", "8", "7", "6"];
-  cardPairs = [];
-
-  while (cardPairs.length < numPairs) {
-    const suit = suits[Math.floor(Math.random() * suits.length)];
-    const rank = ranks[Math.floor(Math.random() * ranks.length)];
-    const image = `${rank}_${suit}.png`;
-
-    if (!cardPairs.includes(image)) {
-      cardPairs.push(image);
-      cardPairs.push(image);
-    }
-  }
-
-  return cardPairs.sort(() => Math.random() - 0.5);
-};
-
-// Добавляем обработчик клика на кнопки выбора уровня сложности
-export const getLevel = () => {
-  const levelButtons = document.querySelectorAll(".content_btn_item");
-  let selectedButton = null;
-
-  removeSelect(levelButtons);
-
-  levelButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const selectedLevel = button.getAttribute("data-level");
-
-      // Удаляем класс "selected" у всех кнопок
-      removeSelect(levelButtons);
-
-      // Добавляем класс "selected" только к выбранной кнопке
-      button.classList.add("selected");
-
-      // Обновляем выбранную кнопку
-      selectedButton = button;
-
-      localStorage.setItem("selectedLevel", selectedLevel); // Сохраняем выбранный уровень в localStorage
-    });
-  });
-};
-
-let cardPairs = [];
 
 // Добавляем обработчик клика на кнопку "Старт"
 export const startGame = () => {
@@ -143,7 +92,7 @@ export const startGame = () => {
               flippedCards = [];
 
               // длинна массива сгенерированных карт
-              if (matchedPairs === cardPairs.length / 2) {
+              if (matchedPairs === cardsList.length / 2) {
                 console.log("winner");
                 startTimer(true);
                 showWinner({ winner: true });
