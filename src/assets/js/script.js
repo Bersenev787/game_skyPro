@@ -1,5 +1,4 @@
 //script.js
-
 import { startTimer, cardPairs } from "./game.js";
 
 // Получаем все элементы с классом "start_second_img"

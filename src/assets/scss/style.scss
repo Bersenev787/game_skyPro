@@ -1,7 +1,5 @@
 //style.scss
 
-@import "fonts";
-
 * {
   margin: 0;
   padding: 0;
@@ -109,7 +107,7 @@ button {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
-    justify-content: space-between;
+    justify-content: center;
     &_img {
       cursor: pointer;
     }

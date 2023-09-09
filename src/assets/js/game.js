@@ -72,17 +72,18 @@ cards.forEach((card, index) => {
   // скрываем карты через 5 секунд
   setTimeout(() => {
     card.setAttribute("data-flipped", false);
-    card.src = "/img/рубашка.png";
+    card.src = "../img/shirt.png";
   }, 5000);
 });
 
 // Начать заново
 const startNewGame = document.querySelector(".start_first_btn");
-startNewGame?.addEventListener("click", () => {
-  localStorage.removeItem("selectedLevel");
-  clearInterval(timerInterval);
-  timerInterval = null;
-  window.location.pathname = "/";
-});
+export const newGameStart = () => {
+  startNewGame?.addEventListener("click", () => {
+    localStorage.removeItem("selectedLevel");
+    clearInterval(timerInterval);
+    timerInterval = null;
+  });
+};
 
 export { startTimer, cardPairs };
