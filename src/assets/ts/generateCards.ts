@@ -1,3 +1,5 @@
+/** @format */
+
 type CardPairs = string[];
 type Suits = string[];
 type Ranks = string[];
@@ -5,17 +7,17 @@ type Ranks = string[];
 export const generateCardPairs = (level: string): CardPairs => {
   const numPairs: number = parseInt(level) * 6; // Количество пар карт в зависимости от уровня
   // Генерация пар карт
-  const suits: Suits = ["spades", "diamonds", "hearts", "cross"];
+  const suits: Suits = ['spades', 'diamonds', 'hearts', 'cross'];
   const ranks: Ranks = [
-    "ace",
-    "king",
-    "queen",
-    "jack",
-    "10",
-    "9",
-    "8",
-    "7",
-    "6",
+    'ace',
+    'king',
+    'queen',
+    'jack',
+    '10',
+    '9',
+    '8',
+    '7',
+    '6',
   ];
   const cardPairs: CardPairs = [];
 

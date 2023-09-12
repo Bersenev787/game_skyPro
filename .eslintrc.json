@@ -18,6 +18,8 @@
   "rules": {
     "prettier/prettier": "error",
     "camelcase": ["error"],
-    "eqeqeq": ["error", "always"]
+    "eqeqeq": ["error", "always"],
+    "import/no-webpack-loader-syntax": "off",
+    "plugin/declaration-block-no-redundant-longhand-properties": false
   }
 }

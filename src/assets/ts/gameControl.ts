@@ -1,9 +1,11 @@
-import { getLevel } from "./selectLevel";
-import { generateCardPairs } from "./generateCards";
+/** @format */
 
-const container = document.querySelector(".container");
-const content = document.createElement("div");
-content.classList.add("content");
+import { getLevel } from './selectLevel';
+import { generateCardPairs } from './generateCards';
+
+const container = document.querySelector('.container');
+const content = document.createElement('div');
+content.classList.add('content');
 
 export const enterPage = (): void => {
   content.innerHTML = `
@@ -23,14 +25,14 @@ export const enterPage = (): void => {
 
 // Добавляем обработчик клика на кнопку "Старт"
 export const startGame = (): void => {
-  const startButton: Element | null = document.querySelector(".content_start");
+  const startButton: Element | null = document.querySelector('.content_start');
 
-  startButton.addEventListener("click", () => {
+  startButton.addEventListener('click', () => {
     // Получаем уровень сложности из localStorage
-    const selectedLevel: string | null = localStorage.getItem("selectedLevel");
+    const selectedLevel: string | null = localStorage.getItem('selectedLevel');
 
     if (!selectedLevel) {
-      alert("Пожалуйста, выберите уровень сложности перед началом игры.");
+      alert('Пожалуйста, выберите уровень сложности перед началом игры.');
       return;
     }
 
@@ -45,15 +47,15 @@ export const startGame = (): void => {
           />
         `;
     });
-    const startGameField: HTMLDivElement = document.createElement("div");
-    startGameField.classList.add("start");
+    const startGameField: HTMLDivElement = document.createElement('div');
+    startGameField.classList.add('start');
     startGameField.innerHTML = `
       <div class="start_first">
         <div class="start_first_timer">00:00</div>
         <button class="start_first_btn">Начать заново</button>
       </div>
       <div class="start_second">
-        ${cardsList.join("")}
+        ${cardsList.join('')}
       </div>
     `;
 
@@ -61,15 +63,15 @@ export const startGame = (): void => {
     container.appendChild(startGameField);
 
     const cards: NodeListOf<Element> =
-      document.querySelectorAll(".start_second_img");
+      document.querySelectorAll('.start_second_img');
     let flippedCards: Element[] = []; // Массив для хранения перевернутых карточек
     let matchedPairs: number = 0; // Количество пар, которые были найдены
 
     cards.forEach((card, index) => {
-      card.setAttribute("data-flipped", "true");
+      card.setAttribute('data-flipped', 'true');
       setTimeout(() => {
-        card.setAttribute("data-flipped", "false");
-        card.setAttribute("src", "../img/shirt.png");
+        card.setAttribute('data-flipped', 'false');
+        card.setAttribute('src', '../img/shirt.png');
       }, 5000);
     });
 
@@ -78,7 +80,7 @@ export const startGame = (): void => {
       const card: Element = event.target as Element;
 
       if (
-        card.getAttribute("data-flipped") === "false" &&
+        card.getAttribute('data-flipped') === 'false' &&
         flippedCards.length < 2
       ) {
         flipCard(card);
@@ -86,8 +88,8 @@ export const startGame = (): void => {
 
         if (flippedCards.length === 2) {
           if (
-            flippedCards[0].getAttribute("data-image") ===
-            flippedCards[1].getAttribute("data-image")
+            flippedCards[0].getAttribute('data-image') ===
+            flippedCards[1].getAttribute('data-image')
           ) {
             setTimeout(() => {
               // Карты совпали
@@ -111,28 +113,28 @@ export const startGame = (): void => {
 
     // Добавляем обработчик клика на каждую карточку
     cards.forEach((card) => {
-      card.addEventListener("click", handleCardClick);
+      card.addEventListener('click', handleCardClick);
     });
 
     // Функция для переворота карточки
     function flipCard(card: Element): void {
-      card.setAttribute("src", card.getAttribute("data-image") || "");
-      card.setAttribute("data-flipped", "true");
+      card.setAttribute('src', card.getAttribute('data-image') || '');
+      card.setAttribute('data-flipped', 'true');
     }
 
     function showWinner({ winner }: { winner: boolean }) {
       const time: string | null =
-        document.querySelector(".start_first_timer").textContent;
-      const alertPopup: HTMLDivElement = document.createElement("div");
-      alertPopup.classList.add("alert");
+        document.querySelector('.start_first_timer').textContent;
+      const alertPopup: HTMLDivElement = document.createElement('div');
+      alertPopup.classList.add('alert');
 
-      const alertPopupWrapper: HTMLDivElement = document.createElement("div");
+      const alertPopupWrapper: HTMLDivElement = document.createElement('div');
 
-      alertPopupWrapper.classList.add("alert-wrapper");
+      alertPopupWrapper.classList.add('alert-wrapper');
       alertPopupWrapper.innerHTML = `
-              <img src="../img/${winner ? "celebration" : "dead"}.png" alt="" />
+              <img src="../img/${winner ? 'celebration' : 'dead'}.png" alt="" />
               <h3 class="alert-wrapper-title">Вы ${
-                winner ? "выиграли" : "проиграли"
+                winner ? 'выиграли' : 'проиграли'
               } !</h3>
               <p class="alert-wrapper-text">Затраченное время:</p>
               <div class="alert-wrapper-time">
@@ -145,10 +147,10 @@ export const startGame = (): void => {
       container.appendChild(alertPopupWrapper);
 
       const restartGame: Element | null = document.querySelector(
-        ".alert-wrapper-button",
+        '.alert-wrapper-button',
       );
 
-      restartGame.addEventListener("click", () => {
+      restartGame.addEventListener('click', () => {
         container.removeChild(alertPopup);
         container.removeChild(alertPopupWrapper);
         unflipCards();
@@ -157,7 +159,7 @@ export const startGame = (): void => {
     }
 
     const timerElement: Element | null =
-      document.querySelector(".start_first_timer");
+      document.querySelector('.start_first_timer');
     let timerInterval; // Переменная для хранения интервала таймера
     let seconds: number = 0;
     let minutes: number = 0;
@@ -198,8 +200,8 @@ export const startGame = (): void => {
     // Функция для скрытия карточек
     function unflipCards(): void {
       cards.forEach((card) => {
-        card.setAttribute("src", "../img/shirt.png");
-        card.setAttribute("data-flipped", "false");
+        card.setAttribute('src', '../img/shirt.png');
+        card.setAttribute('data-flipped', 'false');
       });
       flippedCards = [];
       matchedPairs = 0;
@@ -207,9 +209,9 @@ export const startGame = (): void => {
 
     // Начать заново
     const startNewGame: Element | null =
-      document.querySelector(".start_first_btn");
-    startNewGame?.addEventListener("click", () => {
-      localStorage.removeItem("selectedLevel");
+      document.querySelector('.start_first_btn');
+    startNewGame?.addEventListener('click', () => {
+      localStorage.removeItem('selectedLevel');
       clearInterval(timerInterval);
       timerInterval = null;
       container.removeChild(startGameField);

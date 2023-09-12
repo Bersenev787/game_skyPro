@@ -1,4 +1,4 @@
-//style.scss
+/** @format */
 
 * {
   margin: 0;
@@ -7,14 +7,14 @@
 }
 
 body {
-  font-family: "stratosskyeng";
+  font-family: stratosskyeng, sans-serif;
   font-style: normal;
   font-weight: 400;
-  color: #000000;
+  color: #000;
 }
 
 button {
-  font-family: "stratosskyeng";
+  font-family: stratosskyeng, sans-serif;
   cursor: pointer;
   border: none;
 }
@@ -44,10 +44,12 @@ button {
     color: #004980;
     text-align: center;
   }
+
   &_btn {
     display: flex;
     gap: 26px;
     justify-content: center;
+
     &_item {
       color: #004980;
       background-color: white;
@@ -58,6 +60,7 @@ button {
       line-height: 72px;
     }
   }
+
   &_start {
     width: 246px;
     height: 48px;
@@ -83,6 +86,7 @@ button {
     margin: 22px 0 48px;
     display: flex;
     justify-content: space-between;
+
     &_timer {
       display: flex;
       color: white;
@@ -91,6 +95,7 @@ button {
       font-weight: 400;
       line-height: 72px;
     }
+
     &_btn {
       width: 246px;
       height: 48px;
@@ -103,11 +108,13 @@ button {
       background: #7ac100;
     }
   }
+
   &_second {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
     justify-content: center;
+
     &_img {
       cursor: pointer;
     }
@@ -148,11 +155,13 @@ button {
     font-weight: 400;
     line-height: 48px;
   }
+
   &-text {
     margin: 28px 0 10px;
     font-size: 24px;
     line-height: 32px;
   }
+
   &-time {
     display: flex;
     justify-content: center;
@@ -161,12 +170,13 @@ button {
     font-size: 64px;
     line-height: 72px;
   }
+
   &-button {
     width: 246px;
     height: 50px;
     color: #fff;
     text-align: center;
-    font-family: "stratosskyeng";
+    font-family: stratosskyeng, sans-serif;
     font-size: 24px;
     font-weight: 400;
     line-height: 32px;
