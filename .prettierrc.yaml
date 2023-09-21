@@ -1,3 +1,6 @@
+# @format
+
 tabWidth: 2
 semi: true
-singleQuote: false
+singleQuote: true
+insertPragma: true
